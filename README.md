@@ -222,6 +222,65 @@ pipeline {
 ## Step 13–26: Jenkins Master & Slave Configuration, Tomcat Setup, WAR Deployment
 
 
+
+
+
+## Step 5: Install Jenkins on EC2
+1. Create a script:
+   ```sh
+   vim Jenkins.sh
+   ```
+2. Add the following content:
+   ```sh
+   # Install required packages
+   yum install git java-1.8.0-openjdk maven -y
+
+   # Add Jenkins repository
+   sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+   # Install Java and Jenkins
+   sudo yum install java-17-amazon-corretto -y
+   yum install jenkins -y
+   update-alternatives --config java
+
+   # Start Jenkins service
+   systemctl start jenkins.service
+   systemctl status jenkins.service
+   ```
+3. Run the script:
+   ```sh
+   sh Jenkins.sh
+   ```
+
+## Step 6: Retrieve Jenkins Initial Admin Password
+```sh
+cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+Copy the password for the next step.
+
+## Step 7: Access Jenkins UI
+1. Copy the public IP address of your EC2 instance.
+2. Open a browser and enter:
+   ```
+   http://<Public-IP>:8080
+   ```
+3. Paste the **initial admin password**.
+4. Install **suggested plugins**.
+5. Create the **first admin user**:
+   - Username
+   - Password
+   - Full Name
+   - Email
+6. Click **Save and Continue** → **Save and Finish** → **Start using Jenkins**.
+
+
+
+
+
+
+
+
 ## Step 13: Connect to Jenkins-Master EC2
 ```bash
 sudo -i
@@ -230,19 +289,58 @@ sudo -i
 ```
 
 ## Step 14: Install Jenkins on Master
-Create `Jenkins.sh` with:
-```bash
-yum install git java-1.8.0-openjdk maven -y
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-sudo yum install java-17-amazon-corretto -y
-yum install jenkins -y
-update-alternatives --config java
-systemctl start jenkins.service
-systemctl status jenkins.service
-```
+14.1. Create a script:
+   ```sh
+   vim Jenkins.sh
+   ```
+**14.2. Add the following content:**
+   ```sh
+   # Install required packages
+   yum install git java-1.8.0-openjdk maven -y
 
-## Step 15: Setup Jenkins-Slave EC2
+   # Add Jenkins repository
+   sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+   # Install Java and Jenkins
+   sudo yum install java-17-amazon-corretto -y
+   yum install jenkins -y
+   update-alternatives --config java
+
+   # Start Jenkins service
+   systemctl start jenkins.service
+   systemctl status jenkins.service
+   ```
+**14.3. Run the script:**
+   ```sh
+   sh Jenkins.sh
+   ```
+
+**14.4.Retrieve Jenkins Initial Admin Password:**
+```sh
+cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+Copy the password for the next step.
+
+**14.5. Access Jenkins UI:**
+1. Copy the public IP address of your EC2 instance.
+2. Open a browser and enter:
+   ```
+   http://<Public-IP>:8080
+   ```
+3. Paste the **initial admin password**.
+4. Install **suggested plugins**.
+5. Create the **first admin user**:
+   - Username
+   - Password
+   - Full Name
+   - Email
+6. Click **Save and Continue** → **Save and Finish** → **Start using Jenkins**.
+
+---
+
+## Step 15: Connect to Jenkins-Slave EC2 and Configure Jenkins Slave (Agent)
+
 ```bash
 sudo -i
 hostnamectl set-hostname Jenkins-Slave
@@ -254,56 +352,132 @@ vim jenkins-slave.sh
 ```
 Content:
 ```bash
+#STEP-1: INSTALLING GIT JAVA-1.8.0 MAVEN 
 yum install git java-1.8.0-openjdk maven -y
+
+#STEP-2: DOWNLOAD JAVA11 AND JENKINS
 sudo yum install java-17-amazon-corretto -y
+#update-alternatives --config java
+# *+ 2   /usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/java(select this)
 java -version
 ```
 Run:
 ```bash
 sh jenkins-slave.sh
 ```
+---
 
 ## Step 16: Install Tomcat in Jenkins-Slave
-```bash
-sudo yum install java-17-amazon-corretto -y
+<table>
+  <tr>
+    <td align="center" style="background-color:#f0f8ff; padding:10px;">
+      <img src="https://github.com/arumullayaswanth/Devops-Software-Installation-Project/blob/d08f8ca936c18e489df753fc012e18adf80d8568/Pictures/Install%20Apache%20Tomcat%20in%20Jenkins-1.png" width="90%">
+      <br><b style="color:#1f75fe;">🔵 Install Apache Tomcat in Jenkins - 1</b>
+    </td>
+    <td align="center" style="background-color:#fff0f5; padding:10px;">
+      <img src="https://github.com/arumullayaswanth/Devops-Software-Installation-Project/blob/d08f8ca936c18e489df753fc012e18adf80d8568/Pictures/Install%20Apache%20Tomcat%20in%20Jenkins-2.png" width="90%">
+      <br><b style="color:#e60000;">🔴 Install Apache Tomcat in Jenkins - 2</b>
+    </td>
+  </tr>
+</table>
+## Prerequisites
+- Jenkins is installed and running.
+- Java 17 (Amazon Corretto) is installed.
+- A Linux-based OS (Amazon Linux, CentOS, or Ubuntu).
+
+---
+
+## Step 16.1: Download and Extract Apache Tomcat
+```sh
 wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.98/bin/apache-tomcat-9.0.98.tar.gz
+```
+```sh
 tar -zxvf apache-tomcat-9.0.98.tar.gz
 ```
-Edit users:
-```bash
+
+---
+
+## Step 16.2: Configure Tomcat Users
+Edit the `tomcat-users.xml` file to add admin credentials.
+```sh
 sed -i '55  a\<role rolename="manager-gui"/>' apache-tomcat-9.0.98/conf/tomcat-users.xml
+```
+```sh
 sed -i '56  a\<role rolename="manager-script"/>' apache-tomcat-9.0.98/conf/tomcat-users.xml
+```
+```sh
 sed -i '57  a\<user username="tomcat" password="523182" roles="manager-gui, manager-script"/>' apache-tomcat-9.0.98/conf/tomcat-users.xml
 ```
-Edit context:
-```bash
+add
+```sh
+  <role rolename="manager-gui"/>
+  <role rolename="manager-script"/>
+  <user username="tomcat" password="523182" roles="manager-gui, manager-script"/>
+</tomcat-users>
+```
+---
+
+## Step 16.3: Modify Context.xml
+To allow remote access to Tomcat Manager:
+```sh
 sed -i '21d' apache-tomcat-9.0.98/webapps/manager/META-INF/context.xml
+```
+```sh
 sed -i '22d' apache-tomcat-9.0.98/webapps/manager/META-INF/context.xml
 ```
-Start:
-```bash
+---
+
+## Step 16.4: Start Tomcat
+```sh
 sh apache-tomcat-9.0.98/bin/startup.sh
 ```
 
-Access:
-```url
+---
+
+## Step 16.5: Verify Installation
+Access Tomcat in the browser:
+```
 http://<your-server-ip>:8080
 ```
-Username: `tomcat`, Password: `523182`
+Log in using the configured username (`tomcat`) and password (`523182`).
 
-## Step 17: Configure Jenkins Slave in Master
-- Jenkins Dashboard → Manage Jenkins → Nodes → New Node
-  - Name: `jenkins-slave`, Type: Permanent Agent
-  - Remote root: `/tmp`, Labels: `jenkins-slave`
-  - Launch via SSH → Host: <Private IP of slave>
-  - Add SSH Credentials → Username: `ec2-user`, Key: <KeyPair>
+---
 
-## Step 18: Configure Tomcat Credentials in Jenkins
-- Manage Jenkins → Credentials → Global
-- Add Credentials:
-  - Username: `tomcat`, Password: `523182`
 
-## Step 19: Deploy WAR via Jenkins Pipeline
+## Step 16.6: Integrate Tomcat with Jenkins
+1. Open Jenkins.
+2. Go to **Manage Jenkins** > **Plugins** > **Available Plugins**.
+3. Install **Deploy to Container Plugin**.> **Go back to the top page**
+
+
+
+## Configure Tomcat Credentials in Jenkins
+
+## Step 17.1: Open Jenkins Dashboard
+
+1. Log in to Jenkins.
+2. Click on `Manage Jenkins`.
+3. Navigate to `Credentials` > `System` > `Global credentials (unrestricted)`.
+
+## Step 17.2: Add Tomcat Credentials
+
+1. Click `Add Credentials`.
+2. Enter the following details:
+   - **Username:** `tomcat`
+   - **Password:** `523182`
+3. Click `Create`.
+
+## Step 17.3: Copy Tomcat Credential ID
+
+1. Go back to `Credentials`.
+2. Find the newly created Tomcat credentials.
+3. Copy the **Credential ID** for later use in Jenkins jobs.
+
+Your Apache Tomcat server is now installed and linked to Jenkins! 🚀
+---
+
+
+## Step 18: Deploy WAR via Jenkins Pipeline
 Pipeline Script:
 ```groovy
 pipeline {
@@ -348,13 +522,13 @@ pipeline {
 }
 ```
 
-## Step 20: Verify WAR Deployment
+## Step 19: Verify WAR Deployment
 ```bash
 cd /tmp/workspace/jenkins-project/target
 ll
 ```
 
-## Step 21: Access Tomcat in Browser
+## Step 20: Access Tomcat in Browser
 - URL: `http://<Tomcat-IP>:8080`
 - Login: `tomcat` / `523182`
 - Refresh to see deployed app
