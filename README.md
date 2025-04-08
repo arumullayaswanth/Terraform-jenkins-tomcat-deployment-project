@@ -1,5 +1,6 @@
 # DevOps Pipeline Setup with Terraform, Jenkins (Master-Slave), and Tomcat on AWS EC2
 
+
 ## Step 1: Launch EC2 and Install Terraform
 1. Launch an EC2 instance.(Name:Terraform)
 2. Connect to the EC2 instance via SSH.
@@ -134,43 +135,44 @@ Copy the password for the next step.
    - **Choices**: `apply` and `destroy`
 5. Add the following pipeline script:
    ```groovy
-  pipeline {
-    agent any
+   pipeline {
+       agent any
 
-    environment {
-        AWS_ACCESS_KEY_ID     = credentials('accesskey')
-        AWS_SECRET_ACCESS_KEY = credentials('secretkey')
-    }
+       environment {
+           AWS_ACCESS_KEY_ID     = credentials('accesskey')
+           AWS_SECRET_ACCESS_KEY = credentials('secretkey')
+       }
+       
+       stages {
+           stage('checkout') {
+               steps {
+                   git 'https://github.com/arumullayaswanth/Terraform-Project.git'
+               }
+           }
+           stage('init') {
+               steps {
+                   sh 'terraform init'
+               }
+           }
+           stage('validate') {
+               steps {
+                   sh 'terraform validate'                
+               }
+           }
+           stage('plan') {
+               steps {
+                   sh 'terraform plan'
+               }
+           }
+           stage('action') {
+               steps {
+                   sh 'terraform $action --auto-approve'
+               }
+           }
+       }
+   }
+ ```
 
-    stages {
-        stage('checkout') {
-            steps {
-                git 'https://github.com/arumullayaswanth/jenkins-tomcat-deployment-project.git'
-            }
-        }
-        stage('init') {
-            steps {
-                sh 'terraform init'
-            }
-        }
-        stage('validate') {
-            steps {
-                sh 'terraform validate'                
-            }
-        }
-        stage('plan') {
-            steps {
-                sh 'terraform plan'
-            }
-        }
-        stage('action') {
-            steps {
-                sh 'terraform $action --auto-approve'
-            }
-        }
-    }
-}
-   ```
 6. Click **Save**.
 
 ## Step 10: Build with Parameters
