@@ -129,6 +129,7 @@ resource "aws_s3_bucket_versioning" "versioning" {
     status = "Enabled"  # Enables object versioning for backup and rollback
   }
 }
+```
 
 ---
 
