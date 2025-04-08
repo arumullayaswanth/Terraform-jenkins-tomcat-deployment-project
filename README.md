@@ -223,64 +223,6 @@ pipeline {
 
 
 
-
-
-## Step 5: Install Jenkins on EC2
-1. Create a script:
-   ```sh
-   vim Jenkins.sh
-   ```
-2. Add the following content:
-   ```sh
-   # Install required packages
-   yum install git java-1.8.0-openjdk maven -y
-
-   # Add Jenkins repository
-   sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-   sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-
-   # Install Java and Jenkins
-   sudo yum install java-17-amazon-corretto -y
-   yum install jenkins -y
-   update-alternatives --config java
-
-   # Start Jenkins service
-   systemctl start jenkins.service
-   systemctl status jenkins.service
-   ```
-3. Run the script:
-   ```sh
-   sh Jenkins.sh
-   ```
-
-## Step 6: Retrieve Jenkins Initial Admin Password
-```sh
-cat /var/lib/jenkins/secrets/initialAdminPassword
-```
-Copy the password for the next step.
-
-## Step 7: Access Jenkins UI
-1. Copy the public IP address of your EC2 instance.
-2. Open a browser and enter:
-   ```
-   http://<Public-IP>:8080
-   ```
-3. Paste the **initial admin password**.
-4. Install **suggested plugins**.
-5. Create the **first admin user**:
-   - Username
-   - Password
-   - Full Name
-   - Email
-6. Click **Save and Continue** → **Save and Finish** → **Start using Jenkins**.
-
-
-
-
-
-
-
-
 ## Step 13: Connect to Jenkins-Master EC2
 ```bash
 sudo -i
