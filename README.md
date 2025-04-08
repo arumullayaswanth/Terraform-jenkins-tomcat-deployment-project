@@ -331,7 +331,7 @@ sh jenkins-slave.sh
 
 ---
 
-## Step 16.1: Download and Extract Apache Tomcat
+**Step 16.1: Download and Extract Apache Tomcat:**
 ```sh
 wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.98/bin/apache-tomcat-9.0.98.tar.gz
 ```
@@ -341,7 +341,7 @@ tar -zxvf apache-tomcat-9.0.98.tar.gz
 
 ---
 
-## Step 16.2: Configure Tomcat Users
+**Step 16.2: Configure Tomcat Users:**
 Edit the `tomcat-users.xml` file to add admin credentials.
 ```sh
 sed -i '55  a\<role rolename="manager-gui"/>' apache-tomcat-9.0.98/conf/tomcat-users.xml
@@ -361,7 +361,7 @@ add
 ```
 ---
 
-## Step 16.3: Modify Context.xml
+**Step 16.3: Modify Context.xml**
 To allow remote access to Tomcat Manager:
 ```sh
 sed -i '21d' apache-tomcat-9.0.98/webapps/manager/META-INF/context.xml
@@ -371,14 +371,14 @@ sed -i '22d' apache-tomcat-9.0.98/webapps/manager/META-INF/context.xml
 ```
 ---
 
-## Step 16.4: Start Tomcat
+**Step 16.4: Start Tomcat:**
 ```sh
 sh apache-tomcat-9.0.98/bin/startup.sh
 ```
 
 ---
 
-## Step 16.5: Verify Installation
+**Step 16.5: Verify Installation:**
 Access Tomcat in the browser:
 ```
 http://<your-server-ip>:8080
@@ -388,12 +388,12 @@ Log in using the configured username (`tomcat`) and password (`523182`).
 ---
 
 
-## Step 16.6: Integrate Tomcat with Jenkins
+**Step 16.6: Integrate Tomcat with Jenkins:**
 1. Open Jenkins.
 2. Go to **Manage Jenkins** > **Plugins** > **Available Plugins**.
 3. Install **Deploy to Container Plugin**.> **Go back to the top page**
-
-
+   
+---
 
 ## Configure Tomcat Credentials in Jenkins
 
