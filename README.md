@@ -1,14 +1,11 @@
 # DevOps Pipeline Setup with Terraform, Jenkins (Master-Slave), and Tomcat on AWS EC2
 
 ## Step 1: Launch EC2 and Install Terraform
-
-1. Launch an EC2 instance (Name: `Terraform`).
+1. Launch an EC2 instance.(Name:Terraform)
 2. Connect to the EC2 instance via SSH.
-
----
+3. Install Terraform on the EC2 instance.
 
 ## Step 2: Grant Permissions to Terraform
-
 1. Navigate to **IAM (Identity and Access Management)**.
 2. Go to **Users** → Click **Create User**.
 3. Set **User Name** as `terraform`.
@@ -22,115 +19,129 @@
 11. Click **Next** → **Create Access Key**.
 12. Download the **.csv file**.
 
----
+## Step 3: Configure AWS CLI on EC2
+1. Run the following command:
+   ```sh
+   aws configure
+   ```
+2. Provide the required values:
+   ```sh
+   aws_access_key_id = YOUR_ACCESS_KEY
+   aws_secret_access_key = YOUR_SECRET_KEY
+   region = us-east-1
+   output = table
+   ```
+3. Verify configuration:
+   ```sh
+   aws configure list
+   aws sts get-caller-identity
+   ```
 
-## Step 3: Connect to Terraform EC2 Instance and Switch to Superuser
+## Step 4: Install Terraform on EC2
+1. Create a script:
+   ```sh
+   vim terraform.sh
+   ```
+2. Add the following content:
+   ```sh
+   # Step 1: Install Required Packages
+   sudo yum install -y yum-utils shadow-utils
 
+   # Step 2: Add the HashiCorp Repository
+   sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+
+   # Step 3: Install Terraform
+   sudo yum -y install terraform
+   terraform -version
+   ```
+3. Run the script:
+   ```sh
+   sh terraform.sh
+   ```
+
+## Step 5: Install Jenkins on EC2
+1. Create a script:
+   ```sh
+   vim Jenkins.sh
+   ```
+2. Add the following content:
+   ```sh
+   # Install required packages
+   yum install git java-1.8.0-openjdk maven -y
+
+   # Add Jenkins repository
+   sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+   # Install Java and Jenkins
+   sudo yum install java-17-amazon-corretto -y
+   yum install jenkins -y
+   update-alternatives --config java
+
+   # Start Jenkins service
+   systemctl start jenkins.service
+   systemctl status jenkins.service
+   ```
+3. Run the script:
+   ```sh
+   sh Jenkins.sh
+   ```
+
+## Step 6: Retrieve Jenkins Initial Admin Password
 ```sh
-ssh -i <your-key.pem> ec2-user@<terraform-ec2-public-ip>
-sudo -i
-```
-
----
-
-## Step 4: Configure AWS CLI on EC2
-
-```sh
-aws configure
-```
-
-**Provide the required values:**
-
-- aws\_access\_key\_id = YOUR\_ACCESS\_KEY
-- aws\_secret\_access\_key = YOUR\_SECRET\_KEY
-- region = us-east-1
-- output = table
-
-**Verify configuration:**
-
-```sh
-aws configure list
-aws sts get-caller-identity
-```
-
----
-
-## Step 5: Install Terraform on EC2
-
-**Create a script:**
-
-```sh
-vim terraform.sh
-```
-
-**Add the following content:**
-
-```sh
-# Step 1: Install Required Packages
-sudo yum install -y yum-utils shadow-utils
-
-# Step 2: Add the HashiCorp Repository
-sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-
-# Step 3: Install Terraform
-sudo yum -y install terraform
-terraform -version
-```
-
-**Run the script:**
-
-```sh
-sh terraform.sh
-```
-
----
-
-
-
-## Step 6: Install Jenkins on Terraform EC2
-Create a script:
-```bash
-vim Jenkins.sh
-```
-Content:
-```bash
-yum install git java-1.8.0-openjdk maven -y
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-sudo yum install java-17-amazon-corretto -y
-yum install jenkins -y
-update-alternatives --config java
-systemctl start jenkins.service
-systemctl status jenkins.service
-```
-Run:
-```bash
-sh Jenkins.sh
-```
-
-## Step 7: Retrieve Jenkins Initial Admin Password
-```bash
 cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
+Copy the password for the next step.
 
-## Step 8: Access Jenkins UI
-- Open: `http://<Public-IP>:8080`
-- Paste password, install plugins, and create admin user.
+## Step 7: Access Jenkins UI
+1. Copy the public IP address of your EC2 instance.
+2. Open a browser and enter:
+   ```
+   http://<Public-IP>:8080
+   ```
+3. Paste the **initial admin password**.
+4. Install **suggested plugins**.
+5. Create the **first admin user**:
+   - Username
+   - Password
+   - Full Name
+   - Email
+6. Click **Save and Continue** → **Save and Finish** → **Start using Jenkins**.
 
-## Step 9: Configure Terraform Credentials in Jenkins
-- Jenkins Dashboard → Manage Jenkins → Credentials → System → Global → Add Credentials
-  - **Kind**: Secret Text
-  - **ID**: `accesskey` / `secretkey`
+## Step 8: Configure Terraform Credentials in Jenkins
+1. Open **Jenkins Dashboard** → **Manage Jenkins**.
+2. Navigate to **Credentials** → **System** → **Global Credentials (unrestricted)**.
+3. Click **Add Credentials**:
+   - **Kind**: Select **Secret Text**
+   - **Secret**: Enter your **AWS Access Key**(****************)
+   - **ID**: `accesskey`
+   - **Description**: Enter a meaningful description
+4. Click **Save**.
+5. Add another credential:
+   - **Kind**: Select **Secret Text**
+   - **Secret**: Enter your **AWS Secret Key**(******************)
+   - **ID**: `secretkey`
+   - **Description**: Enter a meaningful description
+6. Click **Save**.
 
-## Step 10: Create Jenkins Pipeline Job
-Pipeline Script:
-```groovy
-pipeline {
+## Step 9: Create a Jenkins Pipeline Job for Terraform
+1. Navigate to **Jenkins Dashboard** → **New Item**.
+2. Enter **Name**: `terraform-project`.
+3. Select **Pipeline** → Click **OK**.
+4. Under **Pipeline Configuration**:
+   - **This project is parameterized** → **Add Parameter** → **Choice Parameter**
+   - **Name**: `action`
+   - **Choices**: `apply` and `destroy`
+5. Add the following pipeline script:
+   ```groovy
+  pipeline {
     agent any
+
     environment {
         AWS_ACCESS_KEY_ID     = credentials('accesskey')
         AWS_SECRET_ACCESS_KEY = credentials('secretkey')
     }
+
     stages {
         stage('checkout') {
             steps {
@@ -159,17 +170,26 @@ pipeline {
         }
     }
 }
-```
+   ```
+6. Click **Save**.
 
-## Step 11: Build with Parameters
-- Jenkins Dashboard → Select `terraform-project` → Build with Parameters → Action: apply
+## Step 10: Build with Parameters
+1. Open **Jenkins Dashboard** → Select **terraform-project**.
+2. Click **Build with Parameters**.
+3. Choose **action** → Select `apply`.
+4. Click **Build**.
 
-## Step 12: Verify Terraform Deployment
-```bash
-cd /var/lib/jenkins/workspace/terraform-project
-ll
-terraform state list
-```
+## Step 11: Verify Terraform Deployment
+1. SSH into your Terraform EC2 instance.
+2. Run the following commands:
+   ```sh
+   cd /var/lib/jenkins/workspace/terraform-project
+   ll
+   ```
+3. List Terraform state:
+   ```sh
+   terraform state list
+   ```
 
 ## Step 13: Connect to Jenkins-Master EC2
 ```bash
