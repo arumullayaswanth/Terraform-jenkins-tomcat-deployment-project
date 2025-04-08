@@ -41,7 +41,6 @@ You will be prompted to enter:
 
 ## ✅ `main.tf`
 
-### 📘 Line-by-Line Explanation
 
 ```hcl
 # Configure the AWS provider and specify the region
