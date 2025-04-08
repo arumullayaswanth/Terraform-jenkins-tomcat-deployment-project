@@ -171,8 +171,7 @@ Copy the password for the next step.
            }
        }
    }
- ```
-
+   ```
 6. Click **Save**.
 
 ## Step 10: Build with Parameters
@@ -192,6 +191,7 @@ Copy the password for the next step.
    ```sh
    terraform state list
    ```
+
 
 ## Step 13: Connect to Jenkins-Master EC2
 ```bash
