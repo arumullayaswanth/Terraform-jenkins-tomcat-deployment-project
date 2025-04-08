@@ -218,6 +218,8 @@ pipeline {
    ```sh
    terraform state list
    ```
+---
+## Step 13–26: Jenkins Master & Slave Configuration, Tomcat Setup, WAR Deployment
 
 
 ## Step 13: Connect to Jenkins-Master EC2
