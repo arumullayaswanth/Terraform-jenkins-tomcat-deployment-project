@@ -4,7 +4,7 @@
 ## Step 1: Launch EC2 and Install Terraform
 1. Launch an EC2 instance.(Name:Terraform)
 2. Connect to the EC2 instance via SSH.
-3. Install Terraform on the EC2 instance.
+
 
 ## Step 2: Grant Permissions to Terraform
 1. Navigate to **IAM (Identity and Access Management)**.
@@ -20,23 +20,38 @@
 11. Click **Next** → **Create Access Key**.
 12. Download the **.csv file**.
 
-## Step 3: Configure AWS CLI on EC2
-1. Run the following command:
-   ```sh
-   aws configure
-   ```
-2. Provide the required values:
-   ```sh
-   aws_access_key_id = YOUR_ACCESS_KEY
-   aws_secret_access_key = YOUR_SECRET_KEY
-   region = us-east-1
-   output = table
-   ```
-3. Verify configuration:
-   ```sh
-   aws configure list
-   aws sts get-caller-identity
-   ```
+---
+
+## Step 3: Connect to Terraform EC2 Instance and Switch to Superuser
+
+```sh
+ssh -i <your-key.pem> ec2-user@<terraform-ec2-public-ip>
+sudo -i
+```
+
+---
+
+## Step 4: Configure AWS CLI on EC2
+
+```sh
+aws configure
+```
+
+**Provide the required values:**
+
+- aws\_access\_key\_id = YOUR\_ACCESS\_KEY
+- aws\_secret\_access\_key = YOUR\_SECRET\_KEY
+- region = us-east-1
+- output = table
+
+**Verify configuration:**
+
+```sh
+aws configure list
+aws sts get-caller-identity
+```
+
+---
 
 ## Step 4: Install Terraform on EC2
 1. Create a script:
