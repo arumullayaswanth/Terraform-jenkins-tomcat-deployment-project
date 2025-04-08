@@ -1,4 +1,4 @@
-# Terraform AWS Deployment - Step-by-Step Guide
+# End-to-End AWS Infrastructure Deployment Using Terraform and Jenkins- Step-by-Step Guide
 
 ## 📁 Directory Structure
 
