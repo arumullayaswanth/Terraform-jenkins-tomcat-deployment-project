@@ -130,7 +130,7 @@ resource "aws_s3_bucket_versioning" "versioning" {
   }
 }
 
-
+---
 
 ## 📦 `variables.tf`
 
