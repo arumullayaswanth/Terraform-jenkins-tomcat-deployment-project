@@ -197,7 +197,7 @@ pipeline {
 }
 
 ```
-6. Click **Save**.
+7. Click **Save**.
 
 ---
 
@@ -220,16 +220,14 @@ pipeline {
    ```
 ---
 ## Step 13–26: Jenkins Master & Slave Configuration, Tomcat Setup, WAR Deployment
-
-
-
+---
 ## Step 13: Connect to Jenkins-Master EC2
 ```bash
 sudo -i
 hostnamectl set-hostname Jenkins-Master
 sudo -i
 ```
-
+---
 ## Step 14: Install Jenkins on Master
 14.1. Create a script:
    ```sh
@@ -322,6 +320,7 @@ sh jenkins-slave.sh
     </td>
   </tr>
 </table>
+
 ## Prerequisites
 - Jenkins is installed and running.
 - Java 17 (Amazon Corretto) is installed.
