@@ -134,7 +134,8 @@ Copy the password for the next step.
    - **Name**: `action`
    - **Choices**: `apply` and `destroy`
 5. Add the following pipeline script:
-   ```groovy
+ ```groovy
+
 //Automating Infrastructure with Jenkins: Running Terraform Scripts using Jenkins Pipeline
 pipeline {
     agent any
@@ -172,7 +173,8 @@ pipeline {
         }
     }
 }
-   ```
+
+```
 6. Click **Save**.
 
 ## Step 10: Build with Parameters
