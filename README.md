@@ -5,6 +5,7 @@
 1. Launch an EC2 instance.(Name:Terraform)
 2. Connect to the EC2 instance via SSH.
 
+---
 
 ## Step 2: Grant Permissions to Terraform
 1. Navigate to **IAM (Identity and Access Management)**.
@@ -130,6 +131,8 @@ Copy the password for the next step.
    - Email
 6. Click **Save and Continue** → **Save and Finish** → **Start using Jenkins**.
 
+---
+
 ## Step 9: Configure Terraform Credentials in Jenkins
 1. Open **Jenkins Dashboard** → **Manage Jenkins**.
 2. Navigate to **Credentials** → **System** → **Global Credentials (unrestricted)**.
@@ -145,6 +148,8 @@ Copy the password for the next step.
    - **ID**: `secretkey`
    - **Description**: Enter a meaningful description
 6. Click **Save**.
+
+---
 
 ## Step 10: Create a Jenkins Pipeline Job for Terraform
 1. Navigate to **Jenkins Dashboard** → **New Item**.
@@ -231,6 +236,7 @@ hostnamectl set-hostname Jenkins-Master
 sudo -i
 ```
 ---
+
 ## Step 14: Install Jenkins on Master
 14.1. Create a script:
    ```sh
@@ -329,7 +335,6 @@ sh jenkins-slave.sh
 - Java 17 (Amazon Corretto) is installed.
 - A Linux-based OS (Amazon Linux, CentOS, or Ubuntu).
 
----
 
 **Step 16.1: Download and Extract Apache Tomcat:**
 ```sh
@@ -338,8 +343,6 @@ wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.98/bin/apache-tomcat-9
 ```sh
 tar -zxvf apache-tomcat-9.0.98.tar.gz
 ```
-
----
 
 **Step 16.2: Configure Tomcat Users:**
 Edit the `tomcat-users.xml` file to add admin credentials.
@@ -359,8 +362,6 @@ add
   <user username="tomcat" password="523182" roles="manager-gui, manager-script"/>
 </tomcat-users>
 ```
----
-
 **Step 16.3: Modify Context.xml**
 To allow remote access to Tomcat Manager:
 ```sh
@@ -369,14 +370,11 @@ sed -i '21d' apache-tomcat-9.0.98/webapps/manager/META-INF/context.xml
 ```sh
 sed -i '22d' apache-tomcat-9.0.98/webapps/manager/META-INF/context.xml
 ```
----
 
 **Step 16.4: Start Tomcat:**
 ```sh
 sh apache-tomcat-9.0.98/bin/startup.sh
 ```
-
----
 
 **Step 16.5: Verify Installation:**
 Access Tomcat in the browser:
@@ -385,25 +383,22 @@ http://<your-server-ip>:8080
 ```
 Log in using the configured username (`tomcat`) and password (`523182`).
 
----
-
 
 **Step 16.6: Integrate Tomcat with Jenkins:**
 1. Open Jenkins.
 2. Go to **Manage Jenkins** > **Plugins** > **Available Plugins**.
 3. Install **Deploy to Container Plugin**.> **Go back to the top page**
    
----
 
-## Configure Tomcat Credentials in Jenkins
+## Step-17: Configure Tomcat Credentials in Jenkins
 
-## Step 17.1: Open Jenkins Dashboard
+***Step 17.1: Open Jenkins Dashboard:***
 
 1. Log in to Jenkins.
 2. Click on `Manage Jenkins`.
 3. Navigate to `Credentials` > `System` > `Global credentials (unrestricted)`.
 
-## Step 17.2: Add Tomcat Credentials
+***Step 17.2: Add Tomcat Credentials:***
 
 1. Click `Add Credentials`.
 2. Enter the following details:
@@ -411,7 +406,7 @@ Log in using the configured username (`tomcat`) and password (`523182`).
    - **Password:** `523182`
 3. Click `Create`.
 
-## Step 17.3: Copy Tomcat Credential ID
+***Step 17.3: Copy Tomcat Credential ID:***
 
 1. Go back to `Credentials`.
 2. Find the newly created Tomcat credentials.
