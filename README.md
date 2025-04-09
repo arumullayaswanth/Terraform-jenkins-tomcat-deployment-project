@@ -1,5 +1,13 @@
 # DevOps Pipeline Setup with Terraform, Jenkins (Master-Slave), and Tomcat on AWS EC2
 
+<table>
+  <tr>
+    <td align="center" style="background-color:#f0f8ff; padding:10px;">
+      <img src="(https://github.com/arumullayaswanth/Devops-Software-Installation-Project/blob/e6dd7184debf213d1cd3b696a85df6d62ba1234c/Pictures/DevOps%20Pipeline%20Setup%20with%20Terraform%2C%20Jenkins%20(Master-Slave)%2C%20and%20Tomcat%20on%20AWS%20EC2.png)" width="90%">
+      <br><b style="color:#1f75fe;">🔵 DevOps Pipeline Setup with Terraform, Jenkins (Master-Slave), and Tomcat on AWS EC2</b>
+    </td>
+  </tr>
+</table>
 
 ## Step 1: Launch EC2 and Install Terraform
 1. Launch an EC2 instance.(Name:Terraform)
