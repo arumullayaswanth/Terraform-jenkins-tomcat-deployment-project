@@ -1,5 +1,5 @@
 # DevOps Pipeline Setup with Terraform, Jenkins (Master-Slave), and Tomcat on AWS EC2
-
+Deploy a web application using Jenkins to a Tomcat server. Everything is provisioned and configured using Terraform.
 <table>
   <tr>
     <td align="center" style="background-color:#f0f8ff; padding:10px;">
