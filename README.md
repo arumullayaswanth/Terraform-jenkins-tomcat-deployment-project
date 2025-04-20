@@ -128,7 +128,7 @@ Copy the password for the next step.
 1. Copy the public IP address of your EC2 instance.
 2. Open a browser and enter:
    ```
-   http://<Public-IP>:8080
+   http://<terraform Public-IP>:8080
    ```
 3. Paste the **initial admin password**.
 4. Install **suggested plugins**.
