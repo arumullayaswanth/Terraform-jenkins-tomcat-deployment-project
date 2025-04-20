@@ -398,7 +398,7 @@ Log in using the configured username (`tomcat`) and password (`523182`).
 3. Install **Deploy to Container Plugin**.> **Go back to the top page**
    
 
-## Step-17: Configure Tomcat Credentials in Jenkins
+## Step-17: Configure Tomcat Credentials in Jenkins Masters ( Jenkins Dashboard)
 
 ***Step 17.1: Open Jenkins Dashboard:***
 
@@ -423,8 +423,16 @@ Log in using the configured username (`tomcat`) and password (`523182`).
 Your Apache Tomcat server is now installed and linked to Jenkins! 🚀
 ---
 
+## Step 18:Jenkins Master & Slave Configuration
 
-## Step 18: Deploy WAR via Jenkins Pipeline
+***Step 17.1: Open Jenkins Dashboard:***
+
+1. Log in to Jenkins.
+2. Click on `Manage Jenkins`.
+
+---
+
+## Step 19: Deploy WAR via Jenkins Pipeline
 Pipeline Script:
 ```groovy
 pipeline {
