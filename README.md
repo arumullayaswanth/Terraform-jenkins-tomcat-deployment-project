@@ -510,13 +510,17 @@ pipeline {
 }
 ```
 
-## Step 19: Verify WAR Deployment
+## Step 19: Build with Parameters
+1. Open **Jenkins Dashboard** → Select **jenkins-project**.
+2. Click **Build**.
+
+## Step 20: Verify WAR Deployment
 ```bash
 cd /tmp/workspace/jenkins-project/target
 ll
 ```
 
-## Step 20: Access Tomcat in Browser
+## Step 21: Access Tomcat in Browser
 - URL: `http://<Tomcat-IP>:8080`
 - Login: `tomcat` / `523182`
 - Refresh to see deployed app
