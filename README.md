@@ -463,7 +463,10 @@ Your Apache Tomcat server is now installed and linked to Jenkins! 🚀
 ---
 
 ## Step 19: Deploy WAR via Jenkins Pipeline
-Pipeline Script:
+1. Navigate to **Jenkins Dashboard** → **New Item**.
+2. Enter **Name**: `jenkins--project`.
+3. Select **Pipeline** → Click **OK**.
+4. Pipeline Script:
 ```groovy
 pipeline {
     agent {
