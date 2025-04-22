@@ -104,6 +104,7 @@ aws sts get-caller-identity
    sudo yum install java-17-amazon-corretto -y
    yum install jenkins -y
    update-alternatives --config java
+   #2
 
    # Start Jenkins service
    systemctl start jenkins.service
