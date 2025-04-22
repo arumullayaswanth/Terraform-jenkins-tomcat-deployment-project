@@ -425,10 +425,12 @@ Your Apache Tomcat server is now installed and linked to Jenkins! 🚀
 
 ## Step 18:Jenkins Master & Slave Configuration
 
-***Step 17.1: Open Jenkins Dashboard:***
+***Step 18.1: Open Jenkins Dashboard:***
 
 1. Log in to Jenkins.
 2. Click on `Manage Jenkins`.
+3. nodes > nodes name (jenkins-slave)
+4. 
 
 ---
 
