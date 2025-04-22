@@ -442,11 +442,11 @@ Your Apache Tomcat server is now installed and linked to Jenkins! 🚀
 1. Log in to Jenkins.
 2. Click on `Manage Jenkins`.
 3. nodes > Nwe Nodes > nodes name (jenkins-slave) > type : select Permanent Agent > `creatr`
-4. Number of executors : 3
-5. Remote root directory : /tmp
-6. Lavels : jenkins-slave
-7. Usage : Only build jobs with label expressions matching this node
-8. Launch method : Launch agents via SSH
+4. Number of executors : `3`
+5. Remote root directory :`/tmp`
+6. Lavels : `jenkins-slave`
+7. Usage : `Only build jobs with label expressions matching this node`
+8. Launch method : `Launch agents via SSH`
    host : 18.212.69.14  **Jenkins Slave Public IPv4 address**
    Credentials :
       ***+ Add--->jenkins--->click-->Add Credentials                                                           
@@ -454,9 +454,9 @@ Your Apache Tomcat server is now installed and linked to Jenkins! 🚀
                   -->Username: ec2-user                                                                        
                       -->private key-->enter directly-->key(paste keypair my-Key pair.pem)                     
                           ---->Add***                                                               
-   Credentials : select ec2-user
-10. Host Key Verification Strategy: Non verifying Verification Strategy
-11. Availability : Keep this agent online as much as possible
+   Credentials : select `ec2-user`
+10. Host Key Verification Strategy: `Non verifying Verification Strategy`
+11. Availability : `Keep this agent online as much as possible`
 12. *SAVE*
    
 
