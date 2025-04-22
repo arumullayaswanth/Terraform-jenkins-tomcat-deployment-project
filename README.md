@@ -305,9 +305,16 @@ Copy the password for the next step.
 
 ```bash
 sudo -i
+```
+```bash
 hostnamectl set-hostname Jenkins-Slave
+```
+```bash
 sudo -i
 ```
+
+
+
 Script:
 ```bash
 vim jenkins-slave.sh
@@ -319,7 +326,7 @@ yum install git java-1.8.0-openjdk maven -y
 
 #STEP-2: DOWNLOAD JAVA11 AND JENKINS
 sudo yum install java-17-amazon-corretto -y
-#update-alternatives --config java
+update-alternatives --config java
 # *+ 2   /usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/java(select this)
 java -version
 ```
