@@ -450,13 +450,13 @@ Your Apache Tomcat server is now installed and linked to Jenkins! 🚀
    host : 18.212.69.14  **Jenkins Slave Public IPv4 address**
    Credentials :
       ***+ Add--->jenkins--->click-->Add Credentials
-        -->Kind:SSH Username with private key
-        -->Username: ec2-user
+            -->Kind:SSH Username with private key
+           -->Username: ec2-user
         -->private key-->enter directly-->key(paste keypair my-Key pair.pem)---->Add***
    Credentials : select ec2-user
-9. Host Key Verification Strategy: Non verifying Verification Strategy
-10. Availability : Keep this agent online as much as possible
-11. *SAVE*
+10. Host Key Verification Strategy: Non verifying Verification Strategy
+11. Availability : Keep this agent online as much as possible
+12. *SAVE*
    
 
 ---
