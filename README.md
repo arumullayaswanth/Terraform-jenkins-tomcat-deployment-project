@@ -134,8 +134,8 @@ Copy the password for the next step.
 3. Paste the **initial admin password**.
 4. Install **suggested plugins**.
 5. Create the **first admin user**:
-   - Username
-   - Password
+   - Username :terraform
+   - Password :terraform
    - Full Name
    - Email
 6. Click **Save and Continue** → **Save and Finish** → **Start using Jenkins**.
