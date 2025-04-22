@@ -497,9 +497,9 @@ pipeline {
             steps {
                 deploy adapters:[
                     tomcat9(
-                        credentialsId: "8eacad04-e5e7-462e-a155-8fc36b9e1c52",
+                        credentialsId: "8eacad04-e5e7-462e-a155-8fc36b9e1c52",   //Credential ID
                         path: " ",
-                        url:"http://54.237.197.4:8080/"
+                        url:"http://54.237.197.4:8080/" //jenkins-slave Public IPv4 address
                     )
                 ],
                 contextPath:"Netfilx",
