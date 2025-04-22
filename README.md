@@ -435,14 +435,29 @@ Log in using the configured username (`tomcat`) and password (`523182`).
 Your Apache Tomcat server is now installed and linked to Jenkins! 🚀
 ---
 
-## Step 18:Jenkins Master & Slave Configuration
+## Step 18: connection betten Jenkins Master & Jenkins Slave Configuration
 
 ***Step 18.1: Open Jenkins Dashboard:***
 
 1. Log in to Jenkins.
 2. Click on `Manage Jenkins`.
-3. nodes > nodes name (jenkins-slave)
-4. 
+3. nodes > Nwe Nodes > nodes name (jenkins-slave) > type : select Permanent Agent > `creatr`
+4. Number of executors : 3
+5. Remote root directory : /tmp
+6. Lavels : jenkins-slave
+7. Usage : Only build jobs with label expressions matching this node
+8. Launch method : Launch agents via SSH
+   host : 18.212.69.14  **Jenkins Slave Public IPv4 address**
+   Credentials :
+      ***+ Add--->jenkins--->click-->Add Credentials
+        -->Kind:SSH Username with private key
+        -->Username: ec2-user
+        -->private key-->enter directly-->key(paste keypair my-Key pair.pem)---->Add***
+   Credentials : select ec2-user
+9. Host Key Verification Strategy: Non verifying Verification Strategy
+10. Availability : Keep this agent online as much as possible
+11. *SAVE*
+   
 
 ---
 
