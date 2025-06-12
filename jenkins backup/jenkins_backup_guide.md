@@ -249,22 +249,10 @@ Add:
 #View Cron Jobs Later
 crontab -l
 #To manually test the cron format or troubleshoot:
-sudo cat /var/log/cron   #Why the file is missing (cat: /var/log/cron: No such file or directory)
+sudo cat /var/log/cron
 
 ```
 
-### ✅ Step-by-Step: Enable Cron Logging
-
-🔧 Step 1: Install rsyslog (if not already installed)
-
-sudo yum install rsyslog -y
-
-Then enable and start the logging service:
-sudo systemctl enable rsyslog
-sudo systemctl start rsyslog
-
-
-📂 Step 2: Enable Logging for cron
 
 
 
